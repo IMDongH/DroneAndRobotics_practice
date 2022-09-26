@@ -13,10 +13,11 @@ def initTello():
     myDrone.yaw_velocity = 0
     myDrone.speed = 0
 
-    print("\n * Drone battery percentage : " + str(myDrone.get_battery())+ "%")
+    print("\n * Drone battery percentage : " + str(myDrone.get_battery()) + "%")
     myDrone.streamoff()
 
     return myDrone
+
 
 def moveTello(myDrone):
     myDrone.takeoff()
@@ -30,12 +31,10 @@ def moveTello(myDrone):
     myDrone.move_forward(50)
     time.sleep(5)
 
-    myDrone.flip_right()
-    time.sleep(5)
-    myDrone.flip_left()
-    time.sleep(5)
+    # myDrone.flip_right()
+    # time.sleep(5)
+    # myDrone.flip_left()
+    # time.sleep(5)
 
     myDrone.land()
     time.sleep(5)
-
-
