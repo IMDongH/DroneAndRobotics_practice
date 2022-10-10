@@ -44,12 +44,15 @@ def main(img1, img2):
 
 
 if __name__ == '__main__':
-    img1 = cv.imread('set1/08.png')
-    img2 = cv.imread('set1/07.png')
-    img3 = cv.imread('set1/06.png')
+
+    img1 = cv.imread('set2/004.png')
+    img2 = cv.imread('set2/003.png')
+    img3 = cv.imread('set2/002.png')
+    img4 = cv.imread('set2/001.png')
 
     result = main(img1,img2)
     result = main(result, img3)
+    result = main(result, img4)
     cv.imshow('result', result)
     cv.waitKey()
     cv.destroyAllWindows()
