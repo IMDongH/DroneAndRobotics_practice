@@ -50,6 +50,16 @@ if __name__ == '__main__':
 
     result = main(img1,img2)
     result = main(result, img3)
-    cv.imshow('result', result)
+
+    pts_src = np.array([[0.0, 0.0], [1090.0, 0.0], [0.0, 800.0], [1250.0, 800.0]])
+    pts_dst = np.array([[0.0, 0.0], [1100.0, 0.0], [0.0, 800.0], [1200.0, 800.0]])
+
+    im_dst = np.zeros((800, 1150, 3), np.uint8)
+
+    h, status = cv.findHomography(pts_src, pts_dst)
+
+    im_out = cv.warpPerspective(result, h, (im_dst.shape[1], im_dst.shape[0]))
+
+    cv.imshow('result2', im_out)
     cv.waitKey()
     cv.destroyAllWindows()
