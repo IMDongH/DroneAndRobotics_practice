@@ -1,40 +1,32 @@
-from djitellopy import Tello
 import cv2
-import time
-
-def initTello():
-    myDrone = Tello()
-    # UDP 통신이어서 드론과 노트북이 1:1로 연결되어있어야한다
-    myDrone.connect()
-
-    myDrone.for_back_velocity = 0
-    myDrone.left_right_velocity = 0
-    myDrone.up_down_velocity = 0
-    myDrone.yaw_velocity = 0
-    myDrone.speed = 0
-
-    print("\n * Drone battery percentage : " + str(myDrone.get_battery()) + "%")
-    myDrone.streamoff()
-
-    return myDrone
+# matplotlib.image 를 사용하기 위해선 matplotlib 뿐만 아니라 pillow도 깔아야 한다.
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 
-def moveTello(myDrone):
-    myDrone.takeoff()
-    time.sleep(5)
+# 색상 범위 설정
+lower_orange = (100, 200, 200)
+upper_orange = (140, 255, 255)
 
-    myDrone.move_back(50)
-    time.sleep(5)
+lower_green = (30, 80, 80)
+upper_green = (70, 255, 255)
 
-    myDrone.rotate_clockwise(360)
-    time.sleep(5)
-    myDrone.move_forward(50)
-    time.sleep(5)
+lower_blue = (0, 180, 55)
+upper_blue = (20, 255, 200)
 
-    # myDrone.flip_right()
-    # time.sleep(5)
-    # myDrone.flip_left()
-    # time.sleep(5)
+# 이미지 파일을 읽어온다
+img = mpimg.imread("test.jpg", cv2.IMREAD_COLOR)
 
-    myDrone.land()
-    time.sleep(5)
+# BGR to HSV 변환
+img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+# 색상 범위를 제한하여 mask 생성
+img_mask = cv2.inRange(img_hsv, lower_green, upper_green)
+
+# 원본 이미지를 가지고 Object 추출 이미지로 생성
+img_result = cv2.bitwise_and(img, img, mask=img_mask)
+
+# 결과 이미지 생성
+imgplot = plt.imshow(img_result)
+
+plt.show()
